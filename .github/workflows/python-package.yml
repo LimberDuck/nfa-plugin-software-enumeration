@@ -39,7 +39,7 @@ jobs:
         run: |
           ls
           ls dist
-          TOOL_CURRENT_VERSION=`sed -e 's/.*__version__ = "\(.*\)".*/\1/' ${{ env.folder_package_name }}/__init__.py`
+          TOOL_CURRENT_VERSION=`sed -n 's/.*__version__ = "\(.*\)".*/\1/p' ${{ env.folder_package_name }}/__init__.py`
           pip install dist/${{ env.folder_package_name }}-${TOOL_CURRENT_VERSION}-py3-none-any.whl
         shell: bash
       - name: pip show package
