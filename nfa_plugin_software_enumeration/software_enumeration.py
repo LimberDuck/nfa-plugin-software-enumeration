@@ -20,9 +20,9 @@ class SoftwareEnumerationPlugin(NFAPlugin):
         return PluginMetadata(
             name="Software Enumeration",
             id="software_enumeration",
-            version="0.1.1",
+            version="0.1.2",
             description="Generate inventory of installed software on Windows and Linux hosts",
-            author="NFA Plugin Examples",
+            author="Damian Krawczyk",
             plugin_ids=[20811, 22869]
         )
 
