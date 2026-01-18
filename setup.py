@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="nfa-plugin-software-enumeration",
-    version="0.1.1",
+    version="0.1.2",
     author="Damian Krawczyk",
     author_email="damian.krawczyk@limberduck.org",
     description="Software Enumeration report plugin for LimberDuck NFA (nessus file analyzer)",
