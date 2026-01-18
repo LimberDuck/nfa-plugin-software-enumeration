@@ -20,7 +20,7 @@ class SoftwareEnumerationPlugin(NFAPlugin):
         return PluginMetadata(
             name="Software Enumeration",
             id="software_enumeration",
-            version="0.1.0",
+            version="0.1.1",
             description="Generate inventory of installed software on Windows and Linux hosts",
             author="NFA Plugin Examples",
             plugin_ids=[20811, 22869]
@@ -195,6 +195,10 @@ class SoftwareEnumerationPlugin(NFAPlugin):
                 skip_count += 1
                 continue
 
+            # Skip separator lines and Debian package status legend
+            if stripped_line.startswith('+++') or stripped_line.startswith('Desired='):
+                continue
+
             # Check for Debian/Ubuntu dpkg format: "  ii/rc   package  version  arch  description"
             if line.startswith('  ii') or line.startswith('  rc'):
                 # Remove the "  ii" or "  rc" prefix
@@ -204,19 +208,20 @@ class SoftwareEnumerationPlugin(NFAPlugin):
                 parts = re.split(r'  +', line, maxsplit=3)
 
                 if len(parts) >= 4:
-                    # Full format with all fields
+                    # Full format with all fields: name version arch description
                     name = parts[0].strip()
                     version = parts[1].strip()
                     architecture = parts[2].strip()
                     description = parts[3].strip()
                 elif len(parts) == 3:
-                    # Missing description
+                    # Format without architecture: name version description
+                    # The third field is description, not architecture
                     name = parts[0].strip()
                     version = parts[1].strip()
-                    architecture = parts[2].strip()
-                    description = ''
+                    architecture = ''
+                    description = parts[2].strip()
                 elif len(parts) == 2:
-                    # Missing architecture and description
+                    # Only name and version
                     name = parts[0].strip()
                     version = parts[1].strip()
                     architecture = ''
