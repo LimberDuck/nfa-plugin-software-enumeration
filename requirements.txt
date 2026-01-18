@@ -1,1 +1,1 @@
-nessus_file_analyzer>=0.11.0
+nessus_file_analyzer>=0.12.0
